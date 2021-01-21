@@ -1,0 +1,19 @@
+name: gelin-configurator
+version: 0.1.0
+summary: Gelin Configurator
+description: Tool for creating and configuring GELin projects
+
+confinement: strict
+base: core18
+grade: stable
+
+apps:
+  gelin-configurator:
+    command: gelin_configurator
+    extensions: [flutter-master] # Where "master" defines which Flutter channel to use for the build
+
+parts:
+  gelin-configurator:
+    source: .
+    plugin: flutter
+    flutter-target: lib/main.dart # The main entry-point file of the application
