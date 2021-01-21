@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gelin_configurator/versionpicker.dart';
 import './filepicker.dart';
+import 'dart:io';
 
 class Configurator extends StatefulWidget {
   final String path;
@@ -20,8 +21,14 @@ class _ConfiguratorState extends State<Configurator> {
     });
   }
 
+  void parseBuildShFile() {
+    var buildFile = new File(widget.path + 'build.sh');
+  }
+
   @override
   Widget build(BuildContext context) {
+    parseBuildShFile();
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Configure'),
@@ -35,18 +42,21 @@ class _ConfiguratorState extends State<Configurator> {
             )
           ],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextField(
-                decoration: InputDecoration(hintText: 'Version'),
-              ),
-              TextField(
-                decoration: InputDecoration(hintText: 'Description'),
-              ),
-              VersionPicker(setVersion),
-              Container(child: FilePickerList('Packages', widget.path))
-            ],
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextField(
+                  decoration: InputDecoration(hintText: 'Version'),
+                ),
+                TextField(
+                  decoration: InputDecoration(hintText: 'Description'),
+                ),
+                VersionPicker(setVersion),
+                Container(child: FilePickerList('Packages', widget.path))
+              ],
+            ),
           ),
         ));
   }

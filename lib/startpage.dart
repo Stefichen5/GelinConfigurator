@@ -18,8 +18,8 @@ class StartPage extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          Configurator('/opt/gelin2-20.10-imx6ul/packages')));
+                      builder: (context) => Configurator(
+                          '/home/stefan/Documents/gelin/HelloWorld')));
             },
             child: Text('Open project'))
       ],
