@@ -1,59 +1,51 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 
 class FilePickerList extends StatefulWidget {
   final String name;
-  final String path;
+  final List<String> content;
+  final Function callback;
 
-  FilePickerList(this.name, this.path);
+  FilePickerList(
+    this.name,
+    this.content,
+    this.callback,
+  );
 
   @override
   _FilePickerListState createState() => _FilePickerListState();
 }
 
 class _FilePickerListState extends State<FilePickerList> {
-  List<String> availableFiles = [''];
+  List<String> availableFiles;
   final _saved = Set<String>();
 
-  List<String> get getAvailableFiles {
-    List<String> result = [];
-
-    try {
-      var dir = new Directory(widget.path);
-      List contents = dir.listSync();
-
-      for (var entry in contents) {
-        if (entry is Directory) {
-          result.add(entry.path
-              .substring(entry.path.lastIndexOf("/") + 1, entry.path.length));
-        }
-      }
-    } on FileSystemException {}
-
-    return result;
-  }
-
-  Widget _buildPackages(String text) {
-    print(text);
-    return ListTile(
-      title: Text(text),
-    );
-  }
-
-  Widget _listViewBuilder() {
-    return ListView.builder(
-        padding: EdgeInsets.all(16),
-        itemBuilder: (context, i) {
-          print(i);
-          return _buildPackages(availableFiles[i]);
-        });
+  List<String> _getVisible(String filterText) {
+    List<String> visible = [];
+    visible = widget.content.where((element) {
+      return element.contains(filterText);
+    }).toList();
+    return visible;
   }
 
   @override
   Widget build(BuildContext context) {
-    availableFiles = getAvailableFiles;
+    if (availableFiles == null) {
+      availableFiles = widget.content;
+    }
+
     return Card(
       child: ExpansionTile(title: Text(widget.name), children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+            decoration: InputDecoration(labelText: 'Search'),
+            onChanged: (value) {
+              setState(() {
+                availableFiles = _getVisible(value);
+              });
+            },
+          ),
+        ),
         ...(availableFiles).map((elem) {
           final already_saved = _saved.contains(elem);
           return ListTile(
@@ -68,6 +60,10 @@ class _FilePickerListState extends State<FilePickerList> {
                   _saved.remove(elem);
                 } else {
                   _saved.add(elem);
+                }
+
+                if (widget.callback != null) {
+                  widget.callback(_saved.toList());
                 }
               });
             },

@@ -10,8 +10,8 @@ class NewProject extends StatefulWidget {
 }
 
 class _NewProjectState extends State<NewProject> {
-  String name = "";
-  String path = "";
+  final name = TextEditingController();
+  final path = TextEditingController();
   String gelinVersion = "";
   String template = "EMPTY";
 
@@ -67,23 +67,24 @@ class _NewProjectState extends State<NewProject> {
             child: Column(
               children: [
                 TextField(
-                  decoration: InputDecoration(hintText: 'Project name'),
-                  onChanged: (text) {
-                    name = text;
-                  },
+                  decoration: InputDecoration(labelText: 'Project name'),
+                  controller: name,
                 ),
                 TextField(
-                  decoration: InputDecoration(hintText: 'Project path'),
-                  onChanged: (text) {
-                    path = text;
-                  },
+                  decoration: InputDecoration(labelText: 'Project path'),
+                  controller: path,
                 ),
-                VersionPicker(setGelinVersion),
+                VersionPicker(setGelinVersion, 'Choose a version'),
                 TemplatePicker(gelinVersion, setTemplate),
                 FloatingActionButton(
                   onPressed: isButtonEnabled()
                       ? () {
-                          _createNewProject(name, path, gelinVersion, template);
+                          _createNewProject(
+                            name.text,
+                            path.text,
+                            gelinVersion,
+                            template,
+                          );
                         }
                       : null,
                   child: Icon(Icons.check),

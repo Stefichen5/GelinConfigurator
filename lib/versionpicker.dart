@@ -3,18 +3,19 @@ import 'dart:io';
 
 class VersionPicker extends StatefulWidget {
   final Function callback;
+  final String initial;
 
-  VersionPicker(this.callback);
+  VersionPicker(this.callback, this.initial);
 
   @override
   _VersionPickerState createState() => _VersionPickerState();
 }
 
 class _VersionPickerState extends State<VersionPicker> {
-  String dropdownValue = "Choose a version";
+  String dropdownValue;
 
   List<String> get getAvailableVersions {
-    List<String> versions = ['Choose a version'];
+    List<String> versions = [widget.initial];
 
     var dir = new Directory("/opt/");
     List contents = dir.listSync();
@@ -23,8 +24,9 @@ class _VersionPickerState extends State<VersionPicker> {
       if (entry is Directory) {
         if (entry.path.contains("gelin2-") &&
             (!entry.path.contains("common"))) {
-          versions.add(entry.path
-              .substring(entry.path.lastIndexOf("/") + 1, entry.path.length));
+          final String version = entry.path
+              .substring(entry.path.lastIndexOf("/") + 1, entry.path.length);
+          if (!versions.contains(version)) versions.add(version);
         }
       }
     }
@@ -34,6 +36,9 @@ class _VersionPickerState extends State<VersionPicker> {
 
   @override
   Widget build(BuildContext context) {
+    if (dropdownValue == null) {
+      dropdownValue = widget.initial;
+    }
     return DropdownButton<String>(
       value: dropdownValue,
       icon: Icon(Icons.arrow_downward),
