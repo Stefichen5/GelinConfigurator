@@ -1,16 +1,23 @@
 # gelin_configurator
 
-A new Flutter project.
+Goal of this project is to aid GELin users with creating and configuring their projects. I wrote this tool in my spare time.
 
-## Getting Started
+I am not a UI/UX designer and thus the interface might look a little bit rough and not as aesthetically pleasing or intuitive as would be ideal.
 
-This project is a starting point for a Flutter application.
+Feel free to use it if you wish. However, I do not guarantee that it will work, do what you want or does not destroy your computer. Use at your own risk.
 
-A few resources to get you started if this is your first Flutter project:
+## Supported features
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- Create new projects
+  - Set name and path
+  - Choose GELin version to base the project on
+  - Choose a project template 
+- Modify existing projects
+  - Change name, version number and project description
+  - Change used GELin version (automatically scans for installed GELin on your computer in /opt/)
+  - Add/Remove packages
+  - Add/Remove subprojects
+  - Add/Remove files
+- Save changes
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+More is WIP
