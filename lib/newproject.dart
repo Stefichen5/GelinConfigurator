@@ -28,8 +28,8 @@ class _NewProjectState extends State<NewProject> {
   bool isButtonEnabled() {
     if (gelinVersion.contains("gelin2") &&
         template != "Choose a template" &&
-        name != '' &&
-        path != '') {
+        name.text != '' &&
+        path.text != '') {
       return true;
     } else {
       return false;
