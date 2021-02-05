@@ -16,6 +16,10 @@ class MyApp extends StatelessWidget {
         ),
         body: Center(child: StartPage()),
       ),
+      theme: ThemeData(
+        primaryColor: Colors.green,
+        accentColor: Colors.green,
+      ),
     );
   }
 }

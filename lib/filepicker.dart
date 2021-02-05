@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 class FilePickerList extends StatefulWidget {
   final String name;
+  final List<String> _preSelected;
   final List<String> content;
   final Function callback;
 
   FilePickerList(
     this.name,
     this.content,
+    this._preSelected,
     this.callback,
   );
 
@@ -18,6 +20,8 @@ class FilePickerList extends StatefulWidget {
 class _FilePickerListState extends State<FilePickerList> {
   List<String> availableFiles;
   final _saved = Set<String>();
+  bool initialized = false;
+  String _searchTerm = '';
 
   List<String> _getVisible(String filterText) {
     List<String> visible = [];
@@ -29,8 +33,19 @@ class _FilePickerListState extends State<FilePickerList> {
 
   @override
   Widget build(BuildContext context) {
-    if (availableFiles == null) {
-      availableFiles = widget.content;
+    //if (availableFiles == null) {
+    availableFiles = widget.content;
+    //}
+
+    //add already selected packages to list
+    if (!initialized && widget._preSelected.length > 0) {
+      for (final elem in widget._preSelected) {
+        if (!_saved.contains(elem)) {
+          _saved.add(elem);
+        }
+      }
+
+      initialized = true;
     }
 
     return Card(
@@ -41,22 +56,23 @@ class _FilePickerListState extends State<FilePickerList> {
             decoration: InputDecoration(labelText: 'Search'),
             onChanged: (value) {
               setState(() {
-                availableFiles = _getVisible(value);
+                _searchTerm = value;
+                //availableFiles = _getVisible(value);
               });
             },
           ),
         ),
-        ...(availableFiles).map((elem) {
-          final already_saved = _saved.contains(elem);
+        ...(_getVisible(_searchTerm)).map((elem) {
+          final alreadySaved = _saved.contains(elem);
           return ListTile(
             title: Text(elem),
             trailing: Icon(
-              already_saved ? Icons.check_box : Icons.check_box_outline_blank,
-              color: already_saved ? Colors.green : null,
+              alreadySaved ? Icons.check_box : Icons.check_box_outline_blank,
+              color: alreadySaved ? Theme.of(context).accentColor : null,
             ),
             onTap: () {
               setState(() {
-                if (already_saved) {
+                if (alreadySaved) {
                   _saved.remove(elem);
                 } else {
                   _saved.add(elem);

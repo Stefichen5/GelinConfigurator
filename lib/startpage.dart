@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gelin_configurator/configurator.dart';
+import 'package:gelin_configurator/projectpicker.dart';
 import './newproject.dart';
 
 class StartPage extends StatelessWidget {
@@ -18,8 +18,8 @@ class StartPage extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Configurator(
-                          '/home/stefan/Documents/gelin/HelloWorld')));
+                      builder: (context) =>
+                          ProjectPicker())); //Configurator('/home/stefan/Documents/aaaaaaa')));
             },
             child: Text('Open project'))
       ],

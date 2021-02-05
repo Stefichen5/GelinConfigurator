@@ -17,11 +17,6 @@ class _TemplatePickerState extends State<TemplatePicker> {
   List<String> get getAvailableTemplates {
     List<String> result = ['Choose a template'];
 
-    /*if (widget.gelinVersion == null) {
-      result.add('No templates found');
-      return result;
-    }*/
-
     try {
       String path = "/opt/" + widget.gelinVersion + "/templates";
 
@@ -36,7 +31,6 @@ class _TemplatePickerState extends State<TemplatePicker> {
       }
     } on FileSystemException {
       print("eyyyy");
-      //result.add('No templates found');
     }
 
     return result;
@@ -49,10 +43,10 @@ class _TemplatePickerState extends State<TemplatePicker> {
       icon: Icon(Icons.arrow_downward),
       iconSize: 24,
       elevation: 16,
-      style: TextStyle(color: Colors.deepPurple),
+      style: TextStyle(color: Colors.black),
       underline: Container(
         height: 2,
-        color: Colors.deepPurpleAccent,
+        color: Theme.of(context).accentColor,
       ),
       onChanged: (String newValue) {
         widget.callback(newValue);

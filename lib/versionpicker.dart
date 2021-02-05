@@ -44,10 +44,10 @@ class _VersionPickerState extends State<VersionPicker> {
       icon: Icon(Icons.arrow_downward),
       iconSize: 24,
       elevation: 16,
-      style: TextStyle(color: Colors.deepPurple),
+      style: TextStyle(color: Colors.black),
       underline: Container(
         height: 2,
-        color: Colors.deepPurpleAccent,
+        color: Theme.of(context).accentColor,
       ),
       onChanged: (String newValue) {
         widget.callback(newValue);
