@@ -33,12 +33,12 @@ class _FilePickerListState extends State<FilePickerList> {
 
   @override
   Widget build(BuildContext context) {
-    //if (availableFiles == null) {
     availableFiles = widget.content;
-    //}
 
     //add already selected packages to list
-    if (!initialized && widget._preSelected.length > 0) {
+    if (!initialized &&
+        widget._preSelected.length > 0 &&
+        widget.content.length > 0) {
       for (final elem in widget._preSelected) {
         if (!_saved.contains(elem)) {
           _saved.add(elem);

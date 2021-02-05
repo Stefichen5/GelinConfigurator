@@ -11,6 +11,7 @@ class FolderPicker extends StatelessWidget {
     return Column(
       children: [
         ListTile(
+          leading: Icon(Icons.arrow_upward),
           title: (Text('(up)')),
           onTap: () => _callback('..'),
         ),

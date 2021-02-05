@@ -13,6 +13,9 @@ class AddRemoveList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //do not keep empty objects
+    _subprojects.removeWhere((element) => element.length < 1);
+
     return Card(
       child: ExpansionTile(
         expandedCrossAxisAlignment: CrossAxisAlignment.start,

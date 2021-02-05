@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gelin_configurator/advancedsettings.dart';
 import 'package:gelin_configurator/addremovelist.dart';
+import 'package:gelin_configurator/classes/configs.dart';
 import 'package:gelin_configurator/versionpicker.dart';
 import './filepicker.dart';
 import 'dart:io';
@@ -15,12 +16,8 @@ class Configurator extends StatefulWidget {
 }
 
 class _ConfiguratorState extends State<Configurator> {
-  String gelinVersion = "gelin2-20.10-imx6ul";
-  List<String> packages = [];
-  List<String> _preSelectedPackages = [];
+  Configs projectConfigs;
   List<String> _availablePackages = [];
-  List<String> _subprojects = [];
-  List<String> _removed = [];
 
   bool _advancedMode = false;
   String _advancedModeButtonString = 'Show advanced settings';
@@ -29,116 +26,59 @@ class _ConfiguratorState extends State<Configurator> {
   final _description = TextEditingController();
   final _projectName = TextEditingController();
 
+  void _configParseDoneCallback() {
+    _getPackages('/opt/${projectConfigs.projectBuildVersion}/packages')
+        .then((value) {
+      setState(() {
+        _availablePackages = value;
+      });
+    });
+
+    setState(() {
+      _projectVersion.text = projectConfigs.projectVersion;
+      _description.text = projectConfigs.projectVersionString;
+      _projectName.text = projectConfigs.projectName;
+    });
+  }
+
   void addSubproject(String subproject) {
     setState(() {
-      _subprojects.add(subproject);
+      projectConfigs.subprojects += ' $subproject';
     });
   }
 
   void removeSubproject(String subproject) {
     setState(() {
-      _subprojects.remove(subproject);
+      projectConfigs.subprojects =
+          projectConfigs.subprojects.replaceFirst(subproject, '');
     });
   }
 
   void addToRemovedList(String remove) {
     setState(() {
-      _removed.add(remove);
+      projectConfigs.baseRemove += ' $remove';
     });
   }
 
   void removeFromRemovedList(String remove) {
     setState(() {
-      _removed.remove(remove);
+      projectConfigs.baseRemove =
+          projectConfigs.baseRemove.replaceFirst(remove, '');
     });
   }
 
   void setVersion(String v) {
     setState(() {
-      gelinVersion = v;
+      projectConfigs.projectBuildVersion = v;
     });
   }
 
   void setPackages(List<String> p) {
-    packages = p;
+    projectConfigs.basePackages = p.join(' ');
   }
 
   Future<File> _buildFile(String path) async {
     return File(path);
-  }
-
-  Future<void> parseBuildShFile() async {
-    String description = '';
-    String version = '';
-    String name = '';
-
-    try {
-      var buildFile = await _buildFile('${widget.path}/build.sh');
-
-      var lines = await buildFile.readAsLines();
-
-      for (final line in lines) {
-        if (line.contains('PROJECT_NAME=')) {
-          name = line.substring(line.indexOf('"') + 1, line.lastIndexOf('"'));
-        } else if (line.contains('PROJECT_VERSION=')) {
-          version =
-              line.substring(line.indexOf('"') + 1, line.lastIndexOf('"'));
-        } else if (line.contains('PROJECT_BUILD_VERSION=')) {
-          //todo: not sure if this works. need to test later
-          gelinVersion =
-              line.substring(line.indexOf('"') + 1, line.lastIndexOf('"'));
-        } else if (line.contains('PROJECT_VERSION_STRING=')) {
-          description =
-              line.substring(line.indexOf('} ') + 2, line.lastIndexOf('"'));
-        }
-        //todo: parse the rest
-      }
-
-      setState(() {
-        _projectVersion.text = version;
-        _description.text = description;
-        _projectName.text = name;
-      });
-    } catch (e) {
-      return;
-    }
-  }
-
-  Future<void> parseProjectConfFile() async {
-    try {
-      var projectConf = await _buildFile('${widget.path}/gelin_project.conf');
-      var lines = await projectConf.readAsLines();
-      List<String> subprojects = [];
-      List<String> selectedPackages = [];
-      List<String> removedFiles = [];
-
-      for (final line in lines) {
-        if (line.contains('BASE_PACKAGES=')) {
-          String packages =
-              line.substring(line.indexOf('="') + 2, line.lastIndexOf('"'));
-          selectedPackages = packages.split(' ');
-        } else if (line.contains('SUBPROJECTS="')) {
-          String tmp = line.substring(line.indexOf('"') + 1, line.length - 1);
-          subprojects = tmp.split(' ');
-        } else if (line.contains('BASE_REMOVE="')) {
-          String tmp = line.substring(line.indexOf('"') + 1, line.length - 1);
-          removedFiles = tmp.split(' ');
-        }
-      }
-
-      //need initial list of packages to be populated
-      //otherwise it is empty and might get written
-      //to file as empty
-      packages = selectedPackages;
-
-      setState(() {
-        _preSelectedPackages = selectedPackages;
-        _subprojects = subprojects;
-        _removed = removedFiles;
-      });
-    } catch (e) {
-      return;
-    }
   }
 
   Future<List<String>> _getPackages(String path) async {
@@ -176,7 +116,8 @@ class _ConfiguratorState extends State<Configurator> {
         } else if (line.contains('PROJECT_VERSION="')) {
           fileContent[i] = 'PROJECT_VERSION="${_projectVersion.text}"';
         } else if (line.contains('PROJECT_BUILD_VERSION="')) {
-          fileContent[i] = 'PROJECT_BUILD_VERSION="$gelinVersion"';
+          fileContent[i] =
+              'PROJECT_BUILD_VERSION="${projectConfigs.projectBuildVersion}"';
         } else if (line.contains('PROJECT_VERSION_STRING="')) {
           fileContent[i] =
               'PROJECT_VERSION_STRING="\${PROJECT_NAME}-\${PROJECT_VERSION} ${_description.text}"';
@@ -195,14 +136,11 @@ class _ConfiguratorState extends State<Configurator> {
         var line = fileContent[i];
 
         if (line.contains('BASE_PACKAGES="')) {
-          var packagesSingleString = packages.join(' ');
-          fileContent[i] = 'BASE_PACKAGES="$packagesSingleString"';
+          fileContent[i] = 'BASE_PACKAGES="${projectConfigs.basePackages}"';
         } else if (line.contains('SUBPROJECTS="')) {
-          var subprojectsSingleString = _subprojects.join(' ');
-          fileContent[i] = 'SUBPROJECTS="$subprojectsSingleString"';
+          fileContent[i] = 'SUBPROJECTS="${projectConfigs.subprojects}"';
         } else if (line.contains('BASE_REMOVE="')) {
-          var baseRemoveSingleString = _removed.join(' ');
-          fileContent[i] = 'BASE_REMOVE="$baseRemoveSingleString"';
+          fileContent[i] = 'BASE_REMOVE="${projectConfigs.baseRemove}"';
         }
       }
 
@@ -226,14 +164,7 @@ class _ConfiguratorState extends State<Configurator> {
   @override
   void initState() {
     super.initState();
-    _getPackages('/opt/$gelinVersion/packages').then((value) {
-      setState(() {
-        _availablePackages = value;
-      });
-    });
-    parseBuildShFile();
-    parseProjectConfFile();
-    print('init done');
+    projectConfigs = Configs(widget.path, _configParseDoneCallback);
   }
 
   @override
@@ -271,18 +202,21 @@ class _ConfiguratorState extends State<Configurator> {
                 decoration: InputDecoration(labelText: 'Description'),
                 controller: _description,
               ),
-              VersionPicker(setVersion, gelinVersion),
+              projectConfigs.projectBuildVersion.length > 0
+                  ? VersionPicker(
+                      setVersion, projectConfigs.projectBuildVersion)
+                  : Container(),
               Container(
                   child: FilePickerList('Packages', _availablePackages,
-                      _preSelectedPackages, setPackages)),
-              AddRemoveList(
-                  _subprojects, 'Subprojects', removeSubproject, addSubproject),
-              AddRemoveList(_removed, 'Removed files', removeFromRemovedList,
-                  addToRemovedList),
+                      projectConfigs.basePackages.split(' '), setPackages)),
+              AddRemoveList(projectConfigs.subprojects.split(' '),
+                  'Subprojects', removeSubproject, addSubproject),
+              AddRemoveList(projectConfigs.baseRemove.split(' '),
+                  'Removed files', removeFromRemovedList, addToRemovedList),
               FlatButton(
                   onPressed: toggleAdvancedMode,
                   child: Text(_advancedModeButtonString)),
-              _advancedMode ? AdvancedSettings() : Container(),
+              _advancedMode ? AdvancedSettings(projectConfigs) : Container(),
             ],
           ),
         ),
