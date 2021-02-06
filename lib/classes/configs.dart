@@ -38,6 +38,15 @@ class Configs {
   static String gelinProjectNfsroot = '';
   static String gelinProjectTftproot = '';
 
+  static bool kernelSourceActivated = false;
+  static bool kernelConfigActivated = false;
+  static bool kernelDeviceTreeActivated = false;
+  static bool kernelBootLogoActivated = false;
+  static bool kernelImageActivated = false;
+  static bool kernelModulesActivated = false;
+  static bool gelinProjectNfsrootActivated = false;
+  static bool gelinProjectTftprootActivated = false;
+
   //housekeeping
   static bool initialized = false;
   static bool buildShDone = false;
@@ -50,6 +59,10 @@ class Configs {
     }
     return fullLine.substring(
         fullLine.indexOf('"') + 1, fullLine.lastIndexOf('"'));
+  }
+
+  bool lineIsComment(String line) {
+    return line.contains('#');
   }
 
   Future<void> _parseBuildSh(String path) async {
@@ -104,16 +117,22 @@ class Configs {
           kernelIntegration = getArgument(line);
         } else if (line.contains('KERNEL_SOURCE="')) {
           kernelSource = getArgument(line);
+          kernelSourceActivated = lineIsComment(line);
         } else if (line.contains('KERNEL_CONFIG="')) {
           kernelConfig = getArgument(line);
+          kernelConfigActivated = lineIsComment(line);
         } else if (line.contains('KERNEL_DEVICETREE="')) {
           kernelDevicetree = getArgument(line);
+          kernelDeviceTreeActivated = lineIsComment(line);
         } else if (line.contains('KERNEL_BOOT_LOGO="')) {
           kernelBootLogo = getArgument(line);
+          kernelBootLogoActivated = lineIsComment(line);
         } else if (line.contains('KERNEL_IMAGE="')) {
           kernelImage = getArgument(line);
+          kernelImageActivated = lineIsComment(line);
         } else if (line.contains('KERNEL_MODULES="')) {
           kernelModules = getArgument(line);
+          kernelModulesActivated = lineIsComment(line);
         } else if (line.contains('OUTPUT_EXT2="')) {
           outputExt2 = line.contains('yes');
         } else if (line.contains('OUTPUT_JFFS2="')) {
@@ -136,8 +155,10 @@ class Configs {
           outputCpio = line.contains('yes');
         } else if (line.contains('GELIN_PROJECT_NFSROOT="')) {
           gelinProjectNfsroot = getArgument(line);
+          gelinProjectNfsrootActivated = lineIsComment(line);
         } else if (line.contains('GELIN_PROJECT_TFTPROOT="')) {
           gelinProjectTftproot = getArgument(line);
+          gelinProjectTftprootActivated = lineIsComment(line);
         }
       }
       projectConfDone = true;
@@ -197,6 +218,14 @@ class Configs {
     buildShDone = false;
     projectConfDone = false;
     doneCallback = null;
+    kernelSourceActivated = false;
+    kernelConfigActivated = false;
+    kernelDeviceTreeActivated = false;
+    kernelBootLogoActivated = false;
+    kernelImageActivated = false;
+    kernelModulesActivated = false;
+    gelinProjectNfsrootActivated = false;
+    gelinProjectTftprootActivated = false;
   }
 
   bool get parsingDone {

@@ -21,3 +21,10 @@ Feel free to use it if you wish. However, I do not guarantee that it will work, 
 - Save changes
 
 More is WIP
+
+## Known bugs
+
+- not feature complete
+- code is not ideal
+- checking for gelin project validity not 100% accurate
+- can overwrite comments in files if they have the same structure like real arguments (e.g. #KERNEL_IMAGE="")

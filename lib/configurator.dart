@@ -139,6 +139,8 @@ class _ConfiguratorState extends State<Configurator> {
         } else if (line.contains('PROJECT_UPDATE_ROOTFS_TYPE="')) {
           fileContent[i] =
               'PROJECT_UPDATE_ROOTFS_TYPE="${Configs.projectUpdateRootfsType}"';
+        } else if (line.contains('PROJECT_UPDATE_ARGS="')) {
+          fileContent[i] = 'PROJECT_UPDATE_ARGS="${Configs.projectUpdateArgs}"';
         }
       }
       buildShFile.writeAsStringSync(fileContent.join('\n'));
@@ -168,16 +170,34 @@ class _ConfiguratorState extends State<Configurator> {
           fileContent[i] = 'KERNEL_INTEGRATION="${Configs.kernelIntegration}"';
         } else if (line.contains('KERNEL_SOURCE="')) {
           fileContent[i] = 'KERNEL_SOURCE="${Configs.kernelSource}"';
+          if (!Configs.kernelSourceActivated) {
+            fileContent[i] = '#${fileContent[i]}';
+          }
         } else if (line.contains('KERNEL_CONFIG="')) {
           fileContent[i] = 'KERNEL_CONFIG="${Configs.kernelConfig}"';
+          if (!Configs.kernelConfigActivated) {
+            fileContent[i] = '#${fileContent[i]}';
+          }
         } else if (line.contains('KERNEL_DEVICETREE="')) {
           fileContent[i] = 'KERNEL_DEVICETREE="${Configs.kernelDevicetree}"';
+          if (!Configs.kernelDeviceTreeActivated) {
+            fileContent[i] = '#${fileContent[i]}';
+          }
         } else if (line.contains('KERNEL_BOOT_LOGO="')) {
           fileContent[i] = 'KERNEL_BOOT_LOGO="${Configs.kernelBootLogo}"';
+          if (!Configs.kernelBootLogoActivated) {
+            fileContent[i] = '#${fileContent[i]}';
+          }
         } else if (line.contains('KERNEL_IMAGE="')) {
           fileContent[i] = 'KERNEL_IMAGE="${Configs.kernelImage}"';
+          if (!Configs.kernelImageActivated) {
+            fileContent[i] = '#${fileContent[i]}';
+          }
         } else if (line.contains('KERNEL_MODULES="')) {
           fileContent[i] = 'KERNEL_MODULES="${Configs.kernelModules}"';
+          if (!Configs.kernelModulesActivated) {
+            fileContent[i] = '#${fileContent[i]}';
+          }
         } else if (line.contains('OUTPUT_EXT2="')) {
           String answer = getYesNoFromBool(Configs.outputExt2);
           fileContent[i] = 'OUTPUT_EXT2="$answer"';
@@ -208,6 +228,18 @@ class _ConfiguratorState extends State<Configurator> {
         } else if (line.contains('OUTPUT_CPIO="')) {
           String answer = getYesNoFromBool(Configs.outputCpio);
           fileContent[i] = 'OUTPUT_CPIO="$answer"';
+        } else if (line.contains('GELIN_PROJECT_NFSROOT="')) {
+          fileContent[i] =
+              'GELIN_PROJECT_NFSROOT="${Configs.gelinProjectNfsroot}"';
+          if (!Configs.gelinProjectNfsrootActivated) {
+            fileContent[i] = '#${fileContent[i]}';
+          }
+        } else if (line.contains('GELIN_PROJECT_TFTPROOT="')) {
+          fileContent[i] =
+              'GELIN_PROJECT_TFTPROOT="${Configs.gelinProjectTftproot}"';
+          if (!Configs.gelinProjectTftprootActivated) {
+            fileContent[i] = '#${fileContent[i]}';
+          }
         }
       }
 
