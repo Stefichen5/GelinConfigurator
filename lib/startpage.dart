@@ -12,16 +12,23 @@ class StartPage extends StatelessWidget {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => NewProject()));
             },
-            child: Text('New project')),
+            child: Row(
+              children: [
+                Icon(Icons.create),
+                Text('New project'),
+              ],
+            )),
         FlatButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          ProjectPicker())); //Configurator('/home/stefan/Documents/aaaaaaa')));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ProjectPicker()));
             },
-            child: Text('Open project'))
+            child: Row(
+              children: [
+                Icon(Icons.folder_open),
+                Text('Open project'),
+              ],
+            ))
       ],
     );
   }

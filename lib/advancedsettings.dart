@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import './classes/configs.dart';
 
 class AdvancedSettings extends StatefulWidget {
-  final Configs projectConfig;
-
-  AdvancedSettings(this.projectConfig);
+  AdvancedSettings();
 
   @override
   _AdvancedSettingsState createState() => _AdvancedSettingsState();
@@ -23,10 +21,6 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
           Text(
             'Advanced settings',
             style: Theme.of(context).textTheme.headline6,
-          ),
-          TextField(
-            decoration:
-                InputDecoration(labelText: 'PROJECT_UPDATE_ROOTFS_TYPE'),
           ),
           TextField(
             decoration: InputDecoration(labelText: 'PROJECT_UPDATE_ARGS'),
@@ -58,19 +52,19 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
           ),
           CheckboxListTile(
             title: Text('OUTPUT_EXT2'),
-            value: widget.projectConfig.outputExt2,
+            value: Configs.outputExt2,
             onChanged: (state) {
               setState(() {
-                widget.projectConfig.outputExt2 = state;
+                Configs.outputExt2 = state;
               });
             },
           ),
           CheckboxListTile(
               title: Text('OUTPUT_JFFS2'),
-              value: widget.projectConfig.outputJffs2,
+              value: Configs.outputJffs2,
               onChanged: (state) {
                 setState(() {
-                  widget.projectConfig.outputJffs2 = state;
+                  Configs.outputJffs2 = state;
                 });
               }),
           TextField(
@@ -78,58 +72,58 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
           ),
           CheckboxListTile(
               title: Text('OUTPUT_JFFS2_COMPRESSION'),
-              value: widget.projectConfig.outputJffs2Compression,
+              value: Configs.outputJffs2Compression,
               onChanged: (state) {
                 setState(() {
-                  widget.projectConfig.outputJffs2Compression = state;
+                  Configs.outputJffs2Compression = state;
                 });
               }),
           CheckboxListTile(
               title: Text('OUTPUT_JFFS2_SUMMARY'),
-              value: widget.projectConfig.outputJffs2Summary,
+              value: Configs.outputJffs2Summary,
               onChanged: (state) {
                 setState(() {
-                  widget.projectConfig.outputJffs2Summary = state;
+                  Configs.outputJffs2Summary = state;
                 });
               }),
           CheckboxListTile(
               title: Text('OUTPUT_UBIFS'),
-              value: widget.projectConfig.outputUbifs,
+              value: Configs.outputUbifs,
               onChanged: (state) {
                 setState(() {
-                  widget.projectConfig.outputUbifs = state;
+                  Configs.outputUbifs = state;
                 });
               }),
           CheckboxListTile(
               title: Text('OUTPUT_UBIFS_COMPRESSION'),
-              value: widget.projectConfig.outputUbifsCompression,
+              value: Configs.outputUbifsCompression,
               onChanged: (state) {
                 setState(() {
-                  widget.projectConfig.outputUbifsCompression = state;
+                  Configs.outputUbifsCompression = state;
                 });
               }),
           CheckboxListTile(
               title: Text('OUTPUT_CRAMFS'),
-              value: widget.projectConfig.outputCramfs,
+              value: Configs.outputCramfs,
               onChanged: (state) {
                 setState(() {
-                  widget.projectConfig.outputCramfs = state;
+                  Configs.outputCramfs = state;
                 });
               }),
           CheckboxListTile(
               title: Text('OUTPUT_SQUASHFS'),
-              value: widget.projectConfig.outputSquashfs,
+              value: Configs.outputSquashfs,
               onChanged: (state) {
                 setState(() {
-                  widget.projectConfig.outputSquashfs = state;
+                  Configs.outputSquashfs = state;
                 });
               }),
           CheckboxListTile(
               title: Text('OUTPUT_CPIO'),
-              value: widget.projectConfig.outputCpio,
+              value: Configs.outputCpio,
               onChanged: (state) {
                 setState(() {
-                  widget.projectConfig.outputCpio = state;
+                  Configs.outputCpio = state;
                 });
               }),
           TextField(

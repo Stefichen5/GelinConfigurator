@@ -11,8 +11,10 @@ class ProjectPicker extends StatefulWidget {
 
 class _ProjectPickerState extends State<ProjectPicker> {
   List<String> _folders = ['A', 'B', 'C'];
+  List<String> _foldersFiltered = [];
   String _currentDir = Platform.environment['HOME'];
   bool fabActive = false;
+  var _searchController = TextEditingController();
 
   bool _isValidProject(List contents) {
     bool hasProjectConf = false;
@@ -74,7 +76,9 @@ class _ProjectPickerState extends State<ProjectPicker> {
     _result.sort();
 
     setState(() {
+      _searchController.text = '';
       _folders = _result;
+      _foldersFiltered = _result;
       _currentDir = newDir;
     });
 
@@ -100,7 +104,21 @@ class _ProjectPickerState extends State<ProjectPicker> {
               _currentDir,
               style: Theme.of(context).textTheme.headline6,
             ),
-            FolderPicker(_folders, createList),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: TextField(
+                controller: _searchController,
+                decoration: InputDecoration(labelText: 'Search'),
+                onChanged: (value) {
+                  setState(() {
+                    _foldersFiltered = _folders
+                        .where((element) => element.contains(value))
+                        .toList();
+                  });
+                },
+              ),
+            ),
+            FolderPicker(_foldersFiltered, createList),
           ],
         ),
       ),

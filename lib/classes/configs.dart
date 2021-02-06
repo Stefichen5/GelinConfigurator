@@ -2,46 +2,47 @@ import 'dart:io';
 
 class Configs {
   //build.sh
-  String projectName = '';
-  String projectVersion = '';
-  String projectVersionString = '';
-  String projectBuildVersion = '';
-  String projectUpdateRootfsType = '';
-  String projectUpdateArgs = '';
+  static String projectName = '';
+  static String projectVersion = '';
+  static String projectVersionString = '';
+  static String projectBuildVersion = '';
+  static String projectUpdateRootfsType = '';
+  static String projectUpdateArgs = '';
 
   //gelin_project.conf
-  String basePackages = '';
-  String baseFiles = '';
-  String baseRemove = '';
-  String subprojects = '';
+  static String basePackages = '';
+  static String baseFiles = '';
+  static String baseRemove = '';
+  static String subprojects = '';
 
-  String kernelDefaultConfigMethod = '';
-  String kernelIntegration = '';
-  String kernelSource = '';
-  String kernelConfig = '';
-  String kernelDevicetree = '';
-  String kernelBootLogo = '';
-  String kernelImage = '';
-  String kernelModules = '';
+  static String kernelDefaultConfigMethod = '';
+  static String kernelIntegration = '';
+  static String kernelSource = '';
+  static String kernelConfig = '';
+  static String kernelDevicetree = '';
+  static String kernelBootLogo = '';
+  static String kernelImage = '';
+  static String kernelModules = '';
 
-  bool outputExt2 = false;
-  bool outputJffs2 = false;
-  String outputJffs2Backend = '';
-  bool outputJffs2Compression = false;
-  bool outputJffs2Summary = false;
-  bool outputUbifs = false;
-  bool outputUbifsCompression = false;
-  bool outputCramfs = false;
-  bool outputSquashfs = false;
-  bool outputCpio = false;
+  static bool outputExt2 = false;
+  static bool outputJffs2 = false;
+  static String outputJffs2Backend = '';
+  static bool outputJffs2Compression = false;
+  static bool outputJffs2Summary = false;
+  static bool outputUbifs = false;
+  static bool outputUbifsCompression = false;
+  static bool outputCramfs = false;
+  static bool outputSquashfs = false;
+  static bool outputCpio = false;
 
-  String gelinProjectNfsroot = '';
-  String gelinProjectTftproot = '';
+  static String gelinProjectNfsroot = '';
+  static String gelinProjectTftproot = '';
 
   //housekeeping
-  bool buildShDone = false;
-  bool projectConfDone = false;
-  Function doneCallback;
+  static bool initialized = false;
+  static bool buildShDone = false;
+  static bool projectConfDone = false;
+  static Function doneCallback;
 
   String getArgument(String fullLine) {
     if (fullLine.length < 2) {
@@ -149,10 +150,53 @@ class Configs {
     }
   }
 
-  Configs(String projectPath, Function doneCallback) {
-    this.doneCallback = doneCallback;
+  Configs();
+
+  void init(String projectPath, Function doneCallback) {
+    if (initialized) {
+      return;
+    }
+    initialized = true;
+    Configs.doneCallback = doneCallback;
     _parseBuildSh(projectPath);
     _parseProjectConf(projectPath);
+  }
+
+  void reset() {
+    projectName = '';
+    projectVersion = '';
+    projectVersionString = '';
+    projectBuildVersion = '';
+    projectUpdateRootfsType = '';
+    projectUpdateArgs = '';
+    basePackages = '';
+    baseFiles = '';
+    baseRemove = '';
+    subprojects = '';
+    kernelDefaultConfigMethod = '';
+    kernelIntegration = '';
+    kernelSource = '';
+    kernelConfig = '';
+    kernelDevicetree = '';
+    kernelBootLogo = '';
+    kernelImage = '';
+    kernelModules = '';
+    outputExt2 = false;
+    outputJffs2 = false;
+    outputJffs2Backend = '';
+    outputJffs2Compression = false;
+    outputJffs2Summary = false;
+    outputUbifs = false;
+    outputUbifsCompression = false;
+    outputCramfs = false;
+    outputSquashfs = false;
+    outputCpio = false;
+    gelinProjectNfsroot = '';
+    gelinProjectTftproot = '';
+    initialized = false;
+    buildShDone = false;
+    projectConfDone = false;
+    doneCallback = null;
   }
 
   bool get parsingDone {

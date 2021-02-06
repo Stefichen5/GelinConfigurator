@@ -42,9 +42,6 @@ class _VersionPickerState extends State<VersionPicker> {
     return DropdownButton<String>(
       value: dropdownValue,
       icon: Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      style: TextStyle(color: Colors.black),
       underline: Container(
         height: 2,
         color: Theme.of(context).accentColor,
