@@ -61,8 +61,12 @@ class Configs {
         fullLine.indexOf('"') + 1, fullLine.lastIndexOf('"'));
   }
 
-  bool lineIsComment(String line) {
-    return line.contains('#');
+  bool _lineIsActive(String line) {
+    if (line.contains('#')) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   Future<void> _parseBuildSh(String path) async {
@@ -117,22 +121,22 @@ class Configs {
           kernelIntegration = getArgument(line);
         } else if (line.contains('KERNEL_SOURCE="')) {
           kernelSource = getArgument(line);
-          kernelSourceActivated = lineIsComment(line);
+          kernelSourceActivated = _lineIsActive(line);
         } else if (line.contains('KERNEL_CONFIG="')) {
           kernelConfig = getArgument(line);
-          kernelConfigActivated = lineIsComment(line);
+          kernelConfigActivated = _lineIsActive(line);
         } else if (line.contains('KERNEL_DEVICETREE="')) {
           kernelDevicetree = getArgument(line);
-          kernelDeviceTreeActivated = lineIsComment(line);
+          kernelDeviceTreeActivated = _lineIsActive(line);
         } else if (line.contains('KERNEL_BOOT_LOGO="')) {
           kernelBootLogo = getArgument(line);
-          kernelBootLogoActivated = lineIsComment(line);
+          kernelBootLogoActivated = _lineIsActive(line);
         } else if (line.contains('KERNEL_IMAGE="')) {
           kernelImage = getArgument(line);
-          kernelImageActivated = lineIsComment(line);
+          kernelImageActivated = _lineIsActive(line);
         } else if (line.contains('KERNEL_MODULES="')) {
           kernelModules = getArgument(line);
-          kernelModulesActivated = lineIsComment(line);
+          kernelModulesActivated = _lineIsActive(line);
         } else if (line.contains('OUTPUT_EXT2="')) {
           outputExt2 = line.contains('yes');
         } else if (line.contains('OUTPUT_JFFS2="')) {
@@ -155,10 +159,10 @@ class Configs {
           outputCpio = line.contains('yes');
         } else if (line.contains('GELIN_PROJECT_NFSROOT="')) {
           gelinProjectNfsroot = getArgument(line);
-          gelinProjectNfsrootActivated = lineIsComment(line);
+          gelinProjectNfsrootActivated = _lineIsActive(line);
         } else if (line.contains('GELIN_PROJECT_TFTPROOT="')) {
           gelinProjectTftproot = getArgument(line);
-          gelinProjectTftprootActivated = lineIsComment(line);
+          gelinProjectTftprootActivated = _lineIsActive(line);
         }
       }
       projectConfDone = true;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gelin_configurator/advancedsettings.dart';
 import 'package:gelin_configurator/addremovelist.dart';
+import 'package:gelin_configurator/basefilespicker.dart';
 import 'package:gelin_configurator/classes/configs.dart';
 import 'package:gelin_configurator/classes/updatecreation.dart';
 import 'package:gelin_configurator/dropdownpicker.dart';
@@ -19,6 +20,7 @@ class Configurator extends StatefulWidget {
 
 class _ConfiguratorState extends State<Configurator> {
   List<String> _availablePackages = [];
+  List<Map<String, Object>> _targetFiles = [];
 
   var _chosenUpdateId = 0;
   bool _advancedMode = false;
@@ -47,11 +49,36 @@ class _ConfiguratorState extends State<Configurator> {
       });
     });
 
+    _getTargetFileList().then((value) {
+      setState(() {
+        _targetFiles = value;
+      });
+    });
+
     setState(() {
       _projectVersion.text = Configs.projectVersion;
       _description.text = Configs.projectVersionString;
       _projectName.text = Configs.projectName;
     });
+  }
+
+  Future<List<Map<String, Object>>> _getTargetFileList() async {
+    List<Map<String, Object>> _files = [];
+
+    try {
+      var dir = new Directory('/opt/${Configs.projectBuildVersion}/target');
+      var elems = dir.listSync(recursive: true);
+
+      for (final elem in elems) {
+        _files.add({
+          'path': elem.path
+              .replaceFirst('/opt/${Configs.projectBuildVersion}/target/', ''),
+          'isFolder': (elem is Directory)
+        });
+      }
+    } catch (e) {}
+
+    return _files;
   }
 
   void addSubproject(String subproject) {
@@ -153,7 +180,7 @@ class _ConfiguratorState extends State<Configurator> {
       fileContent = projectConfFile.readAsLinesSync();
 
       for (var i = 0; i < fileContent.length; i++) {
-        var line = fileContent[i];
+        var line = fileContent[i].replaceAll('  ', ' ');
 
         if (line.contains('BASE_PACKAGES="')) {
           fileContent[i] = 'BASE_PACKAGES="${Configs.basePackages}"';
@@ -314,6 +341,7 @@ class _ConfiguratorState extends State<Configurator> {
               Container(
                   child: FilePickerList('Packages', _availablePackages,
                       Configs.basePackages.split(' '), setPackages)),
+              BaseFilesPicker(_targetFiles),
               AddRemoveList(Configs.subprojects.split(' '), 'Subprojects',
                   removeSubproject, addSubproject),
               AddRemoveList(Configs.baseRemove.split(' '), 'Removed files',
