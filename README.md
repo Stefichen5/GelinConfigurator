@@ -12,6 +12,7 @@ Feel free to use it if you wish. However, I do not guarantee that it will work, 
   - Set name and path
   - Choose GELin version to base the project on
   - Choose a project template 
+  - Add Base files
 - Modify existing projects
   - Change name, version number and project description
   - Change used GELin version (automatically scans for installed GELin on your computer in /opt/)

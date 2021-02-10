@@ -177,7 +177,7 @@ class Configs {
 
   Configs();
 
-  void init(String projectPath, Function doneCallback) {
+  Future<void> init(String projectPath, Function doneCallback) async {
     if (initialized) {
       return;
     }
