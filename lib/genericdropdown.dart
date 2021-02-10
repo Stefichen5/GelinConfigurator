@@ -38,7 +38,12 @@ class _GenericDropdownState extends State<GenericDropdown> {
                       widget._selectCallback(elem['path']);
                     },
                   );
-                })
+                }),
+                ListTile(
+                  title: Text(
+                    '...',
+                  ),
+                )
               ],
             )
           : Column(
