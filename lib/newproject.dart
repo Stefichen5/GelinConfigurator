@@ -44,7 +44,7 @@ class _NewProjectState extends State<NewProject> {
     print("Template: $template");
 
     Process.run('/opt/$gelinVersion/bin/gelin_project_create.sh',
-            ['-p', name, '-t', template],
+            ['-p', name.replaceAll(' ', ''), '-t', template],
             workingDirectory: path)
         .then((value) {
       print(value);
