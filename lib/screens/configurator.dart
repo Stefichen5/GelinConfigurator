@@ -6,7 +6,7 @@ import 'package:gelin_configurator/classes/configs.dart';
 import 'package:gelin_configurator/classes/updatecreation.dart';
 import 'package:gelin_configurator/widgets/dropdownpicker.dart';
 import 'package:gelin_configurator/widgets/versionpicker.dart';
-import '../widgets/filepicker.dart';
+import '../widgets/filepickerlist.dart';
 import 'dart:io';
 
 class Configurator extends StatefulWidget {

@@ -15,12 +15,25 @@ class BaseFilesPicker extends StatefulWidget {
 class _BaseFilesPickerState extends State<BaseFilesPicker> {
   final _baseFilesController = TextEditingController();
   List<Map<String, Object>> _filteredFiles = [];
+  bool _showFiles = true;
+  bool _showFolders = true;
 
   List<Map<String, Object>> _getFiltered(String filter) {
     List<Map<String, Object>> result = [];
     result = widget._files.where((element) {
       return element['path'].toString().contains(filter);
     }).toList();
+
+    if (!_showFiles) {
+      result.removeWhere((element) {
+        return element['isFolder'] == false;
+      });
+    }
+    if (!_showFolders) {
+      result.removeWhere((element) {
+        return element['isFolder'] == true;
+      });
+    }
 
     List<String> addedFiles = Configs.baseFiles.split(' ');
 
@@ -39,6 +52,12 @@ class _BaseFilesPickerState extends State<BaseFilesPicker> {
     });
 
     return result;
+  }
+
+  void _updateFiltered() {
+    setState(() {
+      _filteredFiles = _getFiltered(_baseFilesController.text);
+    });
   }
 
   void _addFile(String file) {
@@ -86,6 +105,34 @@ class _BaseFilesPickerState extends State<BaseFilesPicker> {
             );
           }),*/
           Divider(),
+          Row(
+            children: [
+              Checkbox(
+                value: _showFiles,
+                onChanged: (value) {
+                  setState(() {
+                    _showFiles = value;
+                    _updateFiltered();
+                  });
+                },
+              ),
+              Text('Show files'),
+            ],
+          ),
+          Row(
+            children: [
+              Checkbox(
+                value: _showFolders,
+                onChanged: (value) {
+                  setState(() {
+                    _showFolders = value;
+                    _updateFiltered();
+                  });
+                },
+              ),
+              Text('Show folders'),
+            ],
+          ),
           Padding(
             padding: const EdgeInsets.all(10),
             child: TextField(

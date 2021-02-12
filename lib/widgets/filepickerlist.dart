@@ -20,7 +20,6 @@ class FilePickerList extends StatefulWidget {
 class _FilePickerListState extends State<FilePickerList> {
   List<String> availableFiles;
   final _saved = Set<String>();
-  bool initialized = false;
   String _searchTerm = '';
 
   List<String> _getVisible(String filterText) {
@@ -32,21 +31,22 @@ class _FilePickerListState extends State<FilePickerList> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    availableFiles = widget.content;
+  void initState() {
+    super.initState();
 
     //add already selected packages to list
-    if (!initialized &&
-        widget._preSelected.length > 0 &&
-        widget.content.length > 0) {
+    if (widget._preSelected.length > 0 && widget.content.length > 0) {
       for (final elem in widget._preSelected) {
         if (!_saved.contains(elem)) {
           _saved.add(elem);
         }
       }
-
-      initialized = true;
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    availableFiles = widget.content;
 
     return Card(
       child: ExpansionTile(title: Text(widget.name), children: <Widget>[
