@@ -1,7 +1,7 @@
 class UpdateCreation {
   static const List<String> availableUpdateImageTypes = [
     'Don\'t build update image',
-    'squasfs',
+    'squashfs',
     'ubifs',
     'ext2',
     'cramfs',

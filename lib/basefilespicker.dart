@@ -15,7 +15,7 @@ class _BaseFilesPickerState extends State<BaseFilesPicker> {
   final _baseFilesController = TextEditingController();
   List<Map<String, Object>> _filteredFiles = [];
 
-  List<Map<String, Object>> getFiltered(String filter) {
+  List<Map<String, Object>> _getFiltered(String filter) {
     List<Map<String, Object>> result = [];
     result = widget._files.where((element) {
       return element['path'].toString().contains(filter);
@@ -43,7 +43,7 @@ class _BaseFilesPickerState extends State<BaseFilesPicker> {
   void _addFile(String file) {
     setState(() {
       Configs.baseFiles += ' $file';
-      _filteredFiles = getFiltered(_baseFilesController.text);
+      _filteredFiles = _getFiltered(_baseFilesController.text);
     });
   }
 
@@ -82,7 +82,7 @@ class _BaseFilesPickerState extends State<BaseFilesPicker> {
               decoration: InputDecoration(labelText: 'Add file'),
               onChanged: (value) {
                 setState(() {
-                  _filteredFiles = getFiltered(value);
+                  _filteredFiles = _getFiltered(value);
                 });
               },
               controller: _baseFilesController,
