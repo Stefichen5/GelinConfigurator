@@ -10,8 +10,8 @@ class NewProject extends StatefulWidget {
 }
 
 class _NewProjectState extends State<NewProject> {
-  final name = TextEditingController();
-  final path = TextEditingController();
+  final _name = TextEditingController();
+  final _path = TextEditingController();
   String gelinVersion = "";
   String template = "EMPTY";
 
@@ -28,8 +28,8 @@ class _NewProjectState extends State<NewProject> {
   bool isButtonEnabled() {
     if (gelinVersion.contains("gelin2") &&
         template != "Choose a template" &&
-        name.text != '' &&
-        path.text != '') {
+        _name.text != '' &&
+        _path.text != '') {
       return true;
     } else {
       return false;
@@ -37,61 +37,68 @@ class _NewProjectState extends State<NewProject> {
   }
 
   void _createNewProject(
-      String name, String path, String gelinVersion, String template) {
-    print("Name: $name");
-    print("Path: $path");
+      String _name, String _path, String gelinVersion, String template) {
+    print("_name: $_name");
+    print("_path: $_path");
     print("Gelin: $gelinVersion");
     print("Template: $template");
 
     Process.run('/opt/$gelinVersion/bin/gelin_project_create.sh',
-            ['-p', name.replaceAll(' ', ''), '-t', template],
-            workingDirectory: path)
+            ['-p', _name.replaceAll(' ', ''), '-t', template],
+            workingDirectory: _path)
         .then((value) {
       print(value);
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => Configurator(path + "/" + name)));
+              builder: (context) => Configurator(_path + "/" + _name)));
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _path.text = Platform.environment['HOME'];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Create new project'),
-        ),
-        body: Center(
-          child: Container(
-            margin: EdgeInsets.all(20),
-            child: Column(
-              children: [
-                TextField(
-                  decoration: InputDecoration(labelText: 'Project name'),
-                  controller: name,
-                ),
-                TextField(
-                  decoration: InputDecoration(labelText: 'Project path'),
-                  controller: path,
-                ),
-                VersionPicker(setGelinVersion, 'Choose a version'),
-                TemplatePicker(gelinVersion, setTemplate),
-                FloatingActionButton(
-                  onPressed: isButtonEnabled()
-                      ? () {
-                          _createNewProject(
-                            name.text,
-                            path.text,
-                            gelinVersion,
-                            template,
-                          );
-                        }
-                      : null,
-                  child: Icon(Icons.check),
-                )
-              ],
-            ),
+      appBar: AppBar(
+        title: Text('Create new project'),
+      ),
+      body: Center(
+        child: Container(
+          margin: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              TextField(
+                decoration: InputDecoration(labelText: 'Project name'),
+                controller: _name,
+              ),
+              TextField(
+                decoration: InputDecoration(labelText: 'Project path'),
+                controller: _path,
+              ),
+              VersionPicker(setGelinVersion, 'Choose a version'),
+              TemplatePicker(gelinVersion, setTemplate),
+            ],
           ),
-        ));
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: isButtonEnabled()
+            ? () {
+                _createNewProject(
+                  _name.text,
+                  _path.text,
+                  gelinVersion,
+                  template,
+                );
+              }
+            : null,
+        child: Icon(Icons.check),
+      ),
+    );
   }
 }

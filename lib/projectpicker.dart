@@ -10,7 +10,7 @@ class ProjectPicker extends StatefulWidget {
 }
 
 class _ProjectPickerState extends State<ProjectPicker> {
-  List<String> _folders = ['A', 'B', 'C'];
+  List<String> _folders = [];
   List<String> _foldersFiltered = [];
   String _currentDir = Platform.environment['HOME'];
   bool fabActive = false;
