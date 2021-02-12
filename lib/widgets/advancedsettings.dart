@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './classes/configs.dart';
+import '../classes/configs.dart';
 
 class AdvancedSettings extends StatefulWidget {
   AdvancedSettings();

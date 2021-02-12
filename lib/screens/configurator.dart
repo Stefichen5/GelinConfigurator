@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:gelin_configurator/advancedsettings.dart';
-import 'package:gelin_configurator/addremovelist.dart';
-import 'package:gelin_configurator/basefilespicker.dart';
+import 'package:gelin_configurator/widgets/advancedsettings.dart';
+import 'package:gelin_configurator/widgets/addremovelist.dart';
+import 'package:gelin_configurator/widgets/basefilespicker.dart';
 import 'package:gelin_configurator/classes/configs.dart';
 import 'package:gelin_configurator/classes/updatecreation.dart';
-import 'package:gelin_configurator/dropdownpicker.dart';
-import 'package:gelin_configurator/versionpicker.dart';
-import './filepicker.dart';
+import 'package:gelin_configurator/widgets/dropdownpicker.dart';
+import 'package:gelin_configurator/widgets/versionpicker.dart';
+import '../widgets/filepicker.dart';
 import 'dart:io';
 
 class Configurator extends StatefulWidget {

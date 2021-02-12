@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 
-import './folderpicker.dart';
-import './configurator.dart';
+import '../widgets/folderpicker.dart';
+import 'configurator.dart';
 
 class ProjectPicker extends StatefulWidget {
   @override

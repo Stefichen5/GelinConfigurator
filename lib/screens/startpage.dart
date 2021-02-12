@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gelin_configurator/projectpicker.dart';
-import './newproject.dart';
+import 'package:gelin_configurator/screens/projectpicker.dart';
+import 'newproject.dart';
 
 class StartPage extends StatelessWidget {
   @override

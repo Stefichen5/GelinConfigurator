@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gelin_configurator/widgets/addremovelistchip.dart';
 
 class AddRemoveList extends StatelessWidget {
   final List<String> _subprojects;
@@ -9,7 +10,11 @@ class AddRemoveList extends StatelessWidget {
   final subprojectPathController = TextEditingController();
 
   AddRemoveList(
-      this._subprojects, this._title, this._removeCallback, this._addCallback);
+    this._subprojects,
+    this._title,
+    this._removeCallback,
+    this._addCallback,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,8 @@ class AddRemoveList extends StatelessWidget {
         expandedCrossAxisAlignment: CrossAxisAlignment.start,
         title: Text(_title),
         children: [
-          ..._subprojects.map((elem) {
+          AddRemoveListChip(_subprojects, _removeCallback),
+          /*..._subprojects.map((elem) {
             return ListTile(
               title: Text(elem),
               trailing: IconButton(
@@ -31,7 +37,7 @@ class AddRemoveList extends StatelessWidget {
                 },
               ),
             );
-          }),
+          }),*/
           Divider(),
           ListTile(
             title: TextField(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gelin_configurator/startpage.dart';
+import 'package:gelin_configurator/screens/startpage.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         body: Center(child: StartPage()),
       ),
       theme: ThemeData(
-        primaryColor: Colors.green,
+        primarySwatch: Colors.green,
         accentColor: Colors.green,
       ),
     );

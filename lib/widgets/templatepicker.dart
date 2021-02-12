@@ -30,7 +30,7 @@ class _TemplatePickerState extends State<TemplatePicker> {
         }
       }
     } on FileSystemException {
-      print("eyyyy");
+      print("Exception");
     }
 
     return result;

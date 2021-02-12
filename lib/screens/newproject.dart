@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gelin_configurator/configurator.dart';
-import 'package:gelin_configurator/templatepicker.dart';
-import 'package:gelin_configurator/versionpicker.dart';
+import 'package:gelin_configurator/screens/configurator.dart';
+import 'package:gelin_configurator/widgets/templatepicker.dart';
+import 'package:gelin_configurator/widgets/versionpicker.dart';
 import 'dart:io';
 
 class NewProject extends StatefulWidget {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gelin_configurator/widgets/addremovelistchip.dart';
 import 'package:gelin_configurator/classes/configs.dart';
-import 'package:gelin_configurator/genericdropdown.dart';
+import 'package:gelin_configurator/widgets/genericdropdown.dart';
 
 class BaseFilesPicker extends StatefulWidget {
   final List<Map<String, Object>> _files;
@@ -57,7 +58,16 @@ class _BaseFilesPickerState extends State<BaseFilesPicker> {
         expandedCrossAxisAlignment: CrossAxisAlignment.start,
         title: Text('Base files'),
         children: [
-          ...Configs.baseFiles.split(' ').map((elem) {
+          Configs.baseFiles.length > 1
+              ? AddRemoveListChip(Configs.baseFiles.split(' '), (String elem) {
+                  setState(() {
+                    Configs.baseFiles = Configs.baseFiles
+                        .replaceFirst(elem, '')
+                        .replaceAll(' ', '');
+                  });
+                })
+              : Container(),
+/*          ...Configs.baseFiles.split(' ').map((elem) {
             if (elem == '') {
               return Container();
             }
@@ -74,7 +84,7 @@ class _BaseFilesPickerState extends State<BaseFilesPicker> {
                 },
               ),
             );
-          }),
+          }),*/
           Divider(),
           Padding(
             padding: const EdgeInsets.all(10),
