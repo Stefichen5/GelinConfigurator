@@ -52,14 +52,20 @@ class _FilePickerListState extends State<FilePickerList> {
       child: ExpansionTile(title: Text(widget.name), children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            decoration: InputDecoration(labelText: 'Search'),
-            onChanged: (value) {
-              setState(() {
-                _searchTerm = value;
-                //availableFiles = _getVisible(value);
-              });
-            },
+          child: Row(
+            children: [
+              Icon(Icons.search),
+              Flexible(
+                child: TextField(
+                  decoration: InputDecoration(labelText: 'Search'),
+                  onChanged: (value) {
+                    setState(() {
+                      _searchTerm = value;
+                    });
+                  },
+                ),
+              ),
+            ],
           ),
         ),
         ...(_getVisible(_searchTerm)).map((elem) {

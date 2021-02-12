@@ -44,8 +44,9 @@ class _ConfiguratorState extends State<Configurator> {
 
   void _configParseDoneCallback() {
     _getPackages('/opt/${Configs.projectBuildVersion}/packages').then((value) {
+      _availablePackages = value;
       setState(() {
-        _availablePackages = value;
+        _availablePackages.sort();
       });
     });
 
