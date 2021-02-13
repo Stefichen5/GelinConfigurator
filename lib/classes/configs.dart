@@ -12,8 +12,8 @@ class Configs {
   //gelin_project.conf
   static List<String> basePackages = [];
   static List<String> baseFiles = [];
-  static String baseRemove = '';
-  static String subprojects = '';
+  static List<String> baseRemove = [];
+  static List<String> subprojects = [];
 
   static String kernelDefaultConfigMethod = '';
   static String kernelIntegration = '';
@@ -112,9 +112,9 @@ class Configs {
         } else if (line.contains('BASE_FILES="')) {
           baseFiles = getArgument(line).split(' ');
         } else if (line.contains('BASE_REMOVE="')) {
-          baseRemove = getArgument(line);
+          baseRemove = getArgument(line).split(' ');
         } else if (line.contains('SUBPROJECTS="')) {
-          subprojects = getArgument(line);
+          subprojects = getArgument(line).split(' ');
         } else if (line.contains('KERNEL_DEFAULT_CONFIG_METHOD="')) {
           kernelDefaultConfigMethod = getArgument(line);
         } else if (line.contains('KERNEL_INTEGRATION="')) {
@@ -196,8 +196,8 @@ class Configs {
     projectUpdateArgs = '';
     basePackages = [];
     baseFiles = [];
-    baseRemove = '';
-    subprojects = '';
+    baseRemove = [];
+    subprojects = [];
     kernelDefaultConfigMethod = '';
     kernelIntegration = '';
     kernelSource = '';

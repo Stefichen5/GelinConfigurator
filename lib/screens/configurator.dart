@@ -84,25 +84,25 @@ class _ConfiguratorState extends State<Configurator> {
 
   void addSubproject(String subproject) {
     setState(() {
-      Configs.subprojects += ' $subproject';
+      Configs.subprojects.add(subproject);
     });
   }
 
   void removeSubproject(String subproject) {
     setState(() {
-      Configs.subprojects = Configs.subprojects.replaceFirst(subproject, '');
+      Configs.subprojects.remove(subproject);
     });
   }
 
   void addToRemovedList(String remove) {
     setState(() {
-      Configs.baseRemove += ' $remove';
+      Configs.baseRemove.add(remove);
     });
   }
 
   void removeFromRemovedList(String remove) {
     setState(() {
-      Configs.baseRemove = Configs.baseRemove.replaceFirst(remove, '');
+      Configs.baseRemove.remove(remove);
     });
   }
 
@@ -188,9 +188,9 @@ class _ConfiguratorState extends State<Configurator> {
         } else if (line.contains('BASE_FILES="')) {
           fileContent[i] = 'BASE_FILES="${Configs.baseFiles.join(' ')}"';
         } else if (line.contains('BASE_REMOVE="')) {
-          fileContent[i] = 'BASE_REMOVE="${Configs.baseRemove}"';
+          fileContent[i] = 'BASE_REMOVE="${Configs.baseRemove.join(' ')}"';
         } else if (line.contains('SUBPROJECTS="')) {
-          fileContent[i] = 'SUBPROJECTS="${Configs.subprojects}"';
+          fileContent[i] = 'SUBPROJECTS="${Configs.subprojects.join(' ')}"';
         } else if (line.contains('KERNEL_DEFAULT_CONFIG_METHOD="')) {
           fileContent[i] =
               'KERNEL_DEFAULT_CONFIG_METHOD="${Configs.kernelDefaultConfigMethod}"';
@@ -343,9 +343,9 @@ class _ConfiguratorState extends State<Configurator> {
                   child: FilePickerList('Packages', _availablePackages,
                       Configs.basePackages, setPackages)),
               BaseFilesPicker(_targetFiles),
-              AddRemoveList(Configs.subprojects.split(' '), 'Subprojects',
+              AddRemoveList(Configs.subprojects, 'Subprojects',
                   removeSubproject, addSubproject),
-              AddRemoveList(Configs.baseRemove.split(' '), 'Removed files',
+              AddRemoveList(Configs.baseRemove, 'Removed files',
                   removeFromRemovedList, addToRemovedList),
               Row(
                 children: [
