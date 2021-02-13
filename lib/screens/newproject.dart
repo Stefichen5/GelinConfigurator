@@ -12,8 +12,8 @@ class NewProject extends StatefulWidget {
 class _NewProjectState extends State<NewProject> {
   final _name = TextEditingController();
   final _path = TextEditingController();
-  String gelinVersion = "";
-  String template = "EMPTY";
+  String gelinVersion = '';
+  String template = '';
 
   void setGelinVersion(String v) {
     setState(() {
@@ -22,12 +22,15 @@ class _NewProjectState extends State<NewProject> {
   }
 
   void setTemplate(String t) {
-    template = t;
+    setState(() {
+      template = t;
+    });
   }
 
   bool isButtonEnabled() {
     if (gelinVersion.contains("gelin2") &&
-        template != "Choose a template" &&
+        template != 'Choose a template' &&
+        template != '' &&
         _name.text != '' &&
         _path.text != '') {
       return true;
@@ -98,6 +101,9 @@ class _NewProjectState extends State<NewProject> {
               }
             : null,
         child: Icon(Icons.check),
+        backgroundColor: isButtonEnabled()
+            ? Theme.of(context).floatingActionButtonTheme.backgroundColor
+            : Colors.grey,
       ),
     );
   }

@@ -354,7 +354,7 @@ class _ConfiguratorState extends State<Configurator> {
                       _chosenUpdateId, _updateImagePickerCallback),
                 ],
               ),
-              FlatButton(
+              TextButton(
                   onPressed: toggleAdvancedMode,
                   child: Text(_advancedModeButtonString)),
               _advancedMode ? AdvancedSettings() : Container(),

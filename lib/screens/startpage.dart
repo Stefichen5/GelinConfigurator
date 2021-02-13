@@ -5,30 +5,50 @@ import 'newproject.dart';
 class StartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        FlatButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => NewProject()));
-            },
-            child: Row(
-              children: [
-                Icon(Icons.create),
-                Text('New project'),
-              ],
-            )),
-        FlatButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ProjectPicker()));
-            },
-            child: Row(
-              children: [
-                Icon(Icons.folder_open),
-                Text('Open project'),
-              ],
-            ))
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NewProject()));
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.create,
+                    size: 50,
+                  ),
+                  Text(
+                    'New project',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              )),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProjectPicker()));
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.folder_open,
+                    size: 50,
+                  ),
+                  Text(
+                    'Open project',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              )),
+        )
       ],
     );
   }
