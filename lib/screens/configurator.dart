@@ -82,41 +82,41 @@ class _ConfiguratorState extends State<Configurator> {
     return _files;
   }
 
-  void addSubproject(String subproject) {
+  void _addSubproject(String subproject) {
     setState(() {
       Configs.subprojects.add(subproject);
     });
   }
 
-  void removeSubproject(String subproject) {
+  void _removeSubproject(String subproject) {
     setState(() {
       Configs.subprojects.remove(subproject);
     });
   }
 
-  void addToRemovedList(String remove) {
+  void _addToRemovedList(String remove) {
     setState(() {
       Configs.baseRemove.add(remove);
     });
   }
 
-  void removeFromRemovedList(String remove) {
+  void _removeFromRemovedList(String remove) {
     setState(() {
       Configs.baseRemove.remove(remove);
     });
   }
 
-  void setVersion(String v) {
+  void _setVersion(String v) {
     setState(() {
       Configs.projectBuildVersion = v;
     });
   }
 
-  void setPackages(List<String> p) {
+  void _setPackages(List<String> p) {
     Configs.basePackages = p;
   }
 
-  String getYesNoFromBool(bool val) {
+  String _getYesNoFromBool(bool val) {
     return val ? 'yes' : 'no';
   }
 
@@ -227,34 +227,34 @@ class _ConfiguratorState extends State<Configurator> {
             fileContent[i] = '#${fileContent[i]}';
           }
         } else if (line.contains('OUTPUT_EXT2="')) {
-          String answer = getYesNoFromBool(Configs.outputExt2);
+          String answer = _getYesNoFromBool(Configs.outputExt2);
           fileContent[i] = 'OUTPUT_EXT2="$answer"';
         } else if (line.contains('OUTPUT_JFFS2="')) {
-          String answer = getYesNoFromBool(Configs.outputJffs2);
+          String answer = _getYesNoFromBool(Configs.outputJffs2);
           fileContent[i] = 'OUTPUT_JFFS2="$answer"';
         } else if (line.contains('OUTPUT_JFFS2_BACKEND="')) {
           fileContent[i] =
               'OUTPUT_JFFS2_BACKEND="${Configs.outputJffs2Backend}"';
         } else if (line.contains('OUTPUT_JFFS2_COMPRESSION="')) {
-          String answer = getYesNoFromBool(Configs.outputJffs2Compression);
+          String answer = _getYesNoFromBool(Configs.outputJffs2Compression);
           fileContent[i] = 'OUTPUT_JFFS2_COMPRESSION="$answer"';
         } else if (line.contains('OUTPUT_JFFS2_SUMMARY="')) {
-          String answer = getYesNoFromBool(Configs.outputJffs2Summary);
+          String answer = _getYesNoFromBool(Configs.outputJffs2Summary);
           fileContent[i] = 'OUTPUT_JFFS2_SUMMARY="$answer"';
         } else if (line.contains('OUTPUT_UBIFS="')) {
-          String answer = getYesNoFromBool(Configs.outputUbifs);
+          String answer = _getYesNoFromBool(Configs.outputUbifs);
           fileContent[i] = 'OUTPUT_UBIFS="$answer"';
         } else if (line.contains('OUTPUT_UBIFS_COMPRESSION="')) {
-          String answer = getYesNoFromBool(Configs.outputUbifsCompression);
+          String answer = _getYesNoFromBool(Configs.outputUbifsCompression);
           fileContent[i] = 'OUTPUT_UBIFS_COMPRESSION="$answer"';
         } else if (line.contains('OUTPUT_CRAMFS="')) {
-          String answer = getYesNoFromBool(Configs.outputCramfs);
+          String answer = _getYesNoFromBool(Configs.outputCramfs);
           fileContent[i] = 'OUTPUT_CRAMFS="$answer"';
         } else if (line.contains('OUTPUT_SQUASHFS="')) {
-          String answer = getYesNoFromBool(Configs.outputSquashfs);
+          String answer = _getYesNoFromBool(Configs.outputSquashfs);
           fileContent[i] = 'OUTPUT_SQUASHFS="$answer"';
         } else if (line.contains('OUTPUT_CPIO="')) {
-          String answer = getYesNoFromBool(Configs.outputCpio);
+          String answer = _getYesNoFromBool(Configs.outputCpio);
           fileContent[i] = 'OUTPUT_CPIO="$answer"';
         } else if (line.contains('GELIN_PROJECT_NFSROOT="')) {
           fileContent[i] =
@@ -279,7 +279,7 @@ class _ConfiguratorState extends State<Configurator> {
     return true;
   }
 
-  void toggleAdvancedMode() {
+  void _toggleAdvancedMode() {
     setState(() {
       _advancedMode = !_advancedMode;
       _advancedMode
@@ -335,18 +335,18 @@ class _ConfiguratorState extends State<Configurator> {
                   ? Row(
                       children: [
                         Text('GELin version: '),
-                        VersionPicker(setVersion, Configs.projectBuildVersion),
+                        VersionPicker(_setVersion, Configs.projectBuildVersion),
                       ],
                     )
                   : Container(),
               Container(
                   child: FilePickerList('Packages', _availablePackages,
-                      Configs.basePackages, setPackages)),
+                      Configs.basePackages, _setPackages)),
               BaseFilesPicker(_targetFiles),
               AddRemoveList(Configs.subprojects, 'Subprojects',
-                  removeSubproject, addSubproject),
+                  _removeSubproject, _addSubproject),
               AddRemoveList(Configs.baseRemove, 'Removed files',
-                  removeFromRemovedList, addToRemovedList),
+                  _removeFromRemovedList, _addToRemovedList),
               Row(
                 children: [
                   Text('Update image: '),
@@ -355,7 +355,7 @@ class _ConfiguratorState extends State<Configurator> {
                 ],
               ),
               TextButton(
-                  onPressed: toggleAdvancedMode,
+                  onPressed: _toggleAdvancedMode,
                   child: Text(_advancedModeButtonString)),
               _advancedMode ? AdvancedSettings() : Container(),
             ],
