@@ -20,6 +20,7 @@ class _BaseFilesPickerState extends State<BaseFilesPicker> {
 
   List<Map<String, Object>> _getFiltered(String filter) {
     List<Map<String, Object>> result = [];
+
     result = widget._files.where((element) {
       return element['path'].toString().contains(filter);
     }).toList();
@@ -35,7 +36,7 @@ class _BaseFilesPickerState extends State<BaseFilesPicker> {
       });
     }
 
-    List<String> addedFiles = Configs.baseFiles.split(' ');
+    List<String> addedFiles = Configs.baseFiles;
 
     //remove elements already in list
     result.removeWhere((element) {
@@ -62,7 +63,7 @@ class _BaseFilesPickerState extends State<BaseFilesPicker> {
 
   void _addFile(String file) {
     setState(() {
-      Configs.baseFiles += ' $file';
+      Configs.baseFiles.add(file);
       _filteredFiles = _getFiltered(_baseFilesController.text);
     });
   }
@@ -78,11 +79,9 @@ class _BaseFilesPickerState extends State<BaseFilesPicker> {
         title: Text('Base files'),
         children: [
           Configs.baseFiles.length > 1
-              ? AddRemoveListChip(Configs.baseFiles.split(' '), (String elem) {
+              ? AddRemoveListChip(Configs.baseFiles, (String elem) {
                   setState(() {
-                    Configs.baseFiles = Configs.baseFiles
-                        .replaceFirst(elem, '')
-                        .replaceAll(' ', '');
+                    Configs.baseFiles.remove(elem);
                   });
                 })
               : Container(),

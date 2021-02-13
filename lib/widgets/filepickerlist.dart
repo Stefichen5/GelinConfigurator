@@ -69,7 +69,8 @@ class _FilePickerListState extends State<FilePickerList> {
           ),
         ),
         ...(_getVisible(_searchTerm)).map((elem) {
-          final alreadySaved = _saved.contains(elem);
+          final alreadySaved =
+              widget._preSelected.contains(elem) || _saved.contains(elem);
           return ListTile(
             title: Text(elem),
             trailing: Icon(

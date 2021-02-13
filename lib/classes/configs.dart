@@ -10,8 +10,8 @@ class Configs {
   static String projectUpdateArgs = '';
 
   //gelin_project.conf
-  static String basePackages = '';
-  static String baseFiles = '';
+  static List<String> basePackages = [];
+  static List<String> baseFiles = [];
   static String baseRemove = '';
   static String subprojects = '';
 
@@ -108,9 +108,9 @@ class Configs {
 
       for (final line in lines) {
         if (line.contains('BASE_PACKAGES="')) {
-          basePackages = getArgument(line);
+          basePackages = getArgument(line).split(' ');
         } else if (line.contains('BASE_FILES="')) {
-          baseFiles = getArgument(line);
+          baseFiles = getArgument(line).split(' ');
         } else if (line.contains('BASE_REMOVE="')) {
           baseRemove = getArgument(line);
         } else if (line.contains('SUBPROJECTS="')) {
@@ -194,8 +194,8 @@ class Configs {
     projectBuildVersion = '';
     projectUpdateRootfsType = '';
     projectUpdateArgs = '';
-    basePackages = '';
-    baseFiles = '';
+    basePackages = [];
+    baseFiles = [];
     baseRemove = '';
     subprojects = '';
     kernelDefaultConfigMethod = '';

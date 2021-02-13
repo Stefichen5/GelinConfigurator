@@ -113,7 +113,7 @@ class _ConfiguratorState extends State<Configurator> {
   }
 
   void setPackages(List<String> p) {
-    Configs.basePackages = p.join(' ');
+    Configs.basePackages = p;
   }
 
   String getYesNoFromBool(bool val) {
@@ -184,9 +184,9 @@ class _ConfiguratorState extends State<Configurator> {
         var line = fileContent[i].replaceAll('  ', ' ');
 
         if (line.contains('BASE_PACKAGES="')) {
-          fileContent[i] = 'BASE_PACKAGES="${Configs.basePackages}"';
+          fileContent[i] = 'BASE_PACKAGES="${Configs.basePackages.join(' ')}"';
         } else if (line.contains('BASE_FILES="')) {
-          fileContent[i] = 'BASE_FILES="${Configs.baseFiles}"';
+          fileContent[i] = 'BASE_FILES="${Configs.baseFiles.join(' ')}"';
         } else if (line.contains('BASE_REMOVE="')) {
           fileContent[i] = 'BASE_REMOVE="${Configs.baseRemove}"';
         } else if (line.contains('SUBPROJECTS="')) {
@@ -341,7 +341,7 @@ class _ConfiguratorState extends State<Configurator> {
                   : Container(),
               Container(
                   child: FilePickerList('Packages', _availablePackages,
-                      Configs.basePackages.split(' '), setPackages)),
+                      Configs.basePackages, setPackages)),
               BaseFilesPicker(_targetFiles),
               AddRemoveList(Configs.subprojects.split(' '), 'Subprojects',
                   removeSubproject, addSubproject),
