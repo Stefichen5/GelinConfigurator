@@ -6,6 +6,24 @@ I am not a UI/UX designer and thus the interface might look a little bit rough a
 
 Feel free to use it if you wish. However, I do not guarantee that it will work, do what you want or does not destroy your computer. Use at your own risk.
 
+## What is GELin?
+
+GELin is a "Linux building toolkit" by Ginzinger Electronics which is focused on ease of use and abstracting many of the system builder hassles from the developer, so the developer can focus on their business logic and applications. You can find more information about GELin [here](https://www.ginzinger.com/en/technologien/embedded-linux/).
+
+## Screenshots
+
+![1](images/1.png)
+
+![2](images/2.png)
+
+![3](images/3.png)
+
+![4](images/4.png)
+
+![5](images/5.png)
+
+![6](images/6.png)
+
 ## Supported features
 
 - Create new projects
@@ -23,9 +41,7 @@ Feel free to use it if you wish. However, I do not guarantee that it will work, 
 
 More is WIP
 
-## What is GELin?
 
-GELin is a "Linux building toolkit" by Ginzinger Electronics which is focused on ease of use and abstracting many of the system builder hassles from the developer, so the developer can focus on their business logic and applications. You can find more information about GELin [here](https://www.ginzinger.com/en/technologien/embedded-linux/).
 
 ## Known bugs
 
