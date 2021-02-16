@@ -11,7 +11,9 @@ import 'package:integration_test/integration_test.dart';
 
 import 'package:gelin_configurator/main.dart' as app;
 
-void main() => run(_testMain);
+void main() {
+  //run(_testMain);
+}
 
 void _testMain() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
