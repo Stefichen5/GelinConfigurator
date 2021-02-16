@@ -48,7 +48,14 @@ class StartPage extends StatelessWidget {
                   ),
                 ],
               )),
-        )
+        ),
+        IconButton(
+          icon: Icon(Icons.info),
+          onPressed: () {
+            showLicensePage(context: context);
+          },
+          tooltip: 'License information',
+        ),
       ],
     );
   }
