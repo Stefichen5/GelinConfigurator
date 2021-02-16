@@ -6,8 +6,6 @@ I am not a UI/UX designer and thus the interface might look a little bit rough a
 
 Feel free to use it if you wish. However, I do not guarantee that it will work, do what you want or does not destroy your computer. Use at your own risk.
 
-[TOC]
-
 ## What is GELin?
 
 GELin is a "Linux building toolkit" by Ginzinger Electronics which is focused on ease of use and abstracting many of the system builder hassles from the developer, so the developer can focus on their business logic and applications. You can find more information about GELin [here](https://www.ginzinger.com/en/technologien/embedded-linux/).
