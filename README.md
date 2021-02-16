@@ -6,6 +6,8 @@ I am not a UI/UX designer and thus the interface might look a little bit rough a
 
 Feel free to use it if you wish. However, I do not guarantee that it will work, do what you want or does not destroy your computer. Use at your own risk.
 
+[TOC]
+
 ## What is GELin?
 
 GELin is a "Linux building toolkit" by Ginzinger Electronics which is focused on ease of use and abstracting many of the system builder hassles from the developer, so the developer can focus on their business logic and applications. You can find more information about GELin [here](https://www.ginzinger.com/en/technologien/embedded-linux/).
@@ -41,7 +43,21 @@ GELin is a "Linux building toolkit" by Ginzinger Electronics which is focused on
 
 More is WIP
 
+## Running it on your machine
 
+1. First step: Set up dart and flutter SDK as described [here](https://flutter.dev/desktop)
+
+2. Open the folder containing this project in a terminal
+
+3. run
+
+   ```bash
+   flutter build linux
+   ```
+
+4. the release binary can be found at *build/linux/release/bundle/*  (to use it on a different system, also include the data and lib folders)
+
+You can also download the zip file from the Releases folder on my git.
 
 ## Known bugs
 
