@@ -21,6 +21,7 @@ class _FilePickerListState extends State<FilePickerList> {
   List<String> availableFiles;
   final _saved = Set<String>();
   String _searchTerm = '';
+  bool _initFinished = false;
 
   List<String> _getVisible(String filterText) {
     List<String> visible = [];
@@ -31,22 +32,20 @@ class _FilePickerListState extends State<FilePickerList> {
   }
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
+    availableFiles = widget.content;
 
     //add already selected packages to list
-    if (widget._preSelected.length > 0 && widget.content.length > 0) {
+    if (!_initFinished &&
+        widget._preSelected.length > 0 &&
+        widget.content.length > 0) {
       for (final elem in widget._preSelected) {
         if (!_saved.contains(elem)) {
           _saved.add(elem);
         }
       }
+      _initFinished = true;
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    availableFiles = widget.content;
 
     return Card(
       child: ExpansionTile(title: Text(widget.name), children: <Widget>[
