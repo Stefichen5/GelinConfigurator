@@ -107,6 +107,10 @@ class Configs {
       var lines = await projectConfFile.readAsLines();
 
       for (final line in lines) {
+        //ignore comments
+        if (line.startsWith('#')) {
+          continue;
+        }
         if (line.contains('BASE_PACKAGES="')) {
           basePackages = getArgument(line).split(' ');
         } else if (line.contains('BASE_FILES="')) {
@@ -172,6 +176,7 @@ class Configs {
       }
     } catch (e) {
       print('Error in _parseProjectConf');
+      print(e.toString());
     }
   }
 
