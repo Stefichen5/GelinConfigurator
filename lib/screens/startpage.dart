@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gelin_configurator/screens/projectpicker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'newproject.dart';
+import 'configurator.dart';
 
 class StartPage extends StatelessWidget {
   @override
@@ -32,9 +33,14 @@ class StartPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ProjectPicker()));
+              onPressed: () async {
+                String selectedDirectory =
+                    await FilePicker.platform.getDirectoryPath();
+                print(selectedDirectory);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Configurator(selectedDirectory)));
               },
               child: Row(
                 children: [
