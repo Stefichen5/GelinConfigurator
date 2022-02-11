@@ -279,6 +279,18 @@ class _ConfiguratorState extends State<Configurator> {
     return true;
   }
 
+  Future<void> _build() async {
+    print("Building.. ");
+    Process.run("./build.sh", [], workingDirectory: widget.path)
+        .then((ProcessResult result) => {
+              showDialog(
+                  context: context,
+                  builder: (_) => AlertDialog(
+                      title: Text("Result"), content: Text(result.stdout)))
+            });
+    print('Done');
+  }
+
   void _toggleAdvancedMode() {
     setState(() {
       _advancedMode = !_advancedMode;
@@ -363,8 +375,8 @@ class _ConfiguratorState extends State<Configurator> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.save),
-        onPressed: _saveChanges,
+        child: Icon(Icons.code),
+        onPressed: _build,
       ),
     );
   }
